@@ -1,0 +1,10 @@
+# ignore config file for security
+metronome.db
+metronome.db-shm
+metronome.db-wal
+.env
+node_modules/
+package-lock.json
+cert.cer
+key.key
+bun.lock
