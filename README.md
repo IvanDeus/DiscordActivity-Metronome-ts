@@ -3,7 +3,7 @@
 
 A simple metronome app that runs inside **Discord Voice Channels** as an embedded Activity, using a **Bun backend** and **SQLite** for storing user BPM preferences.
 
-> Works only inside Discord as an Activity and requires HTTPS/WSS access.
+> Works only inside Discord as an Activity
 
 ---
 
