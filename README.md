@@ -25,6 +25,7 @@ A simple metronome app that runs inside **Discord Voice Channels** as an embedde
 - Bun
 - SQLite
 - Discord Developer account with an Application created
+- Node.js (optional)
 
 ### ⚙️ Server Setup (for production)
 
