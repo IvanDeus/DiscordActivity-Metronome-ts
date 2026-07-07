@@ -66,8 +66,8 @@ Edit `.env` and add your actual data: `DISCORD_CLIENT_ID` and `DISCORD_CLIENT_SE
 Build Frontend
 ```
 cd metronome-frontend
-npm install
-ng build
+bun install
+bun run build
 cd ..
 ```
 
