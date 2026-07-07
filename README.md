@@ -44,6 +44,12 @@ Clone the repository or download the source code.
 
 Install [Bun](https://bun.com/docs/installation). No external npm packages are needed as the project uses Bun's built-in APIs (`bun:sqlite` and `Bun.serve`).
 
+Clone repository:
+```
+git clone https://github.com/IvanDeus/DiscordActivity-Metronome-ts.git
+cd DiscordActivity-Metronome-ts
+```
+
 If you wish to run the app in production using PM2, you will also need `pm2` installed via Node.js:
 ```bash
 npm install -g pm2
