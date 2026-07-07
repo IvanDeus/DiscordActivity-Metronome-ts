@@ -38,17 +38,15 @@ A simple metronome app that runs inside **Discord Voice Channels** as an embedde
 
 ### Step 1: Get the App
 
-Clone the repository or download the source code.
-
-### Step 2: Create Environment & Install Dependencies
-
-Install [Bun](https://bun.com/docs/installation). No external npm packages are needed as the project uses Bun's built-in APIs (`bun:sqlite` and `Bun.serve`).
-
-Clone repository:
+Clone the repository or download the source code:
 ```
 git clone https://github.com/IvanDeus/DiscordActivity-Metronome-ts.git
 cd DiscordActivity-Metronome-ts
 ```
+
+### Step 2: Create Environment & Install Dependencies
+
+Install [Bun](https://bun.com/docs/installation). No external npm packages are needed as the project uses Bun's built-in APIs (`bun:sqlite` and `Bun.serve`).
 
 If you wish to run the app in production using PM2, you will also need `pm2` installed via Node.js:
 ```bash
