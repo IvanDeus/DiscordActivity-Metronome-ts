@@ -70,7 +70,7 @@ cp dotenv-example .env
 
 Edit `.env` and add your actual data: `DISCORD_CLIENT_ID` and `DISCORD_CLIENT_SECRET`.
 
-Build Frontend
+Build Frontend:
 ```
 cd metronome-frontend
 bun install
