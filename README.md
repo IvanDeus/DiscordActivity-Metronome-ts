@@ -67,6 +67,7 @@ Build Frontend
 ```
 cd metronome-frontend
 ng build
+cd ..
 ```
 
 ### Step 5: 🏃🏻‍♂️ Run Your Metronome App
