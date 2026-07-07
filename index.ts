@@ -11,7 +11,7 @@ const {
 } = process.env;
 
 if (!DISCORD_CLIENT_ID || !DISCORD_CLIENT_SECRET) {
-  console.error("❌ Missing DISCORD_CLIENT_ID or DISCORD_CLIENT_SECRET in .env");
+  console.error("Missing DISCORD_CLIENT_ID or DISCORD_CLIENT_SECRET in .env");
   process.exit(1);
 }
 
@@ -79,13 +79,13 @@ const server = Bun.serve({
           }
         }
       }
-      // 2️⃣ GET /
+      // GET /
       if (pathname === "/" && method === "GET") {
         return new Response(renderedIndex, {
           headers: { "Content-Type": "text/html; charset=utf-8" },
         });
       }
-      // 3️⃣ POST /api/token
+      // POST /api/token
       if (pathname === "/api/token" && method === "POST") {
         const body = await req.json();
         const code = body?.code;
@@ -99,7 +99,7 @@ const server = Bun.serve({
             client_secret: DISCORD_CLIENT_SECRET!,
             grant_type: "authorization_code",
             code,
-            redirect_uri: body?.redirect_uri || "http://127.0.0.1:3000", // ⚠️ Add if needed
+            redirect_uri: body?.redirect_uri || "http://127.0.0.1:3000",
           }),
         });
 
@@ -123,13 +123,13 @@ const server = Bun.serve({
             $locale: u.locale || "en",
             $email: u.email || "",
           });
-          console.log(`👤 User profile recorded/updated in database: ${u.username} (ID: ${u.id})`);
+          console.log(`User profile recorded/updated in database: ${u.username} (ID: ${u.id})`);
         }
 
         return Response.json(tokenData);
       }
 
-      // 4️⃣ GET /api/user
+      // GET /api/user
       if (pathname === "/api/user" && method === "GET") {
         const userId = searchParams.get("user_id");
         if (!userId) return Response.json({ error: "Missing user_id" }, { status: 400 });
@@ -139,7 +139,7 @@ const server = Bun.serve({
         return Response.json(user);
       }
 
-      // 5️⃣ POST /update_user_prefs
+      // POST /update_user_prefs
       if (pathname === "/update_user_prefs" && method === "POST") {
         const formData = await req.formData();
         const userId = formData.get("user_id") as string;
@@ -158,7 +158,7 @@ const server = Bun.serve({
         return Response.json({ success: true });
       }
 
-      // 6️⃣ 404 Fallback
+      // 404 Fallback
       return new Response("Not Found", { status: 404 });
 
     } catch (error) {
