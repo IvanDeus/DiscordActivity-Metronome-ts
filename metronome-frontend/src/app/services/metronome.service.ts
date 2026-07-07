@@ -23,7 +23,7 @@ export class MetronomeService {
   }
 
   setBPM(newBPM: number) {
-    const clamped = Math.max(24, Math.min(320, Math.round(newBPM)));
+    const clamped = Math.max(24, Math.min(240, Math.round(newBPM)));
     if (clamped === this.bpm()) return;
     this.bpm.set(clamped);
   }
