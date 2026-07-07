@@ -54,7 +54,7 @@ If you wish to run the app in production using PM2, you will also need `pm2` ins
 npm install -g pm2
 ```
 
-### Step 3: 🤖 Set Up Your Discord Application
+### Step 3: Set Up Your Discord Application
 
 1. Go to the [Discord Developer Portal](https://discord.com/developers/applications) and create a new application.
 2. Under the **OAuth2** tab, save your **Client ID** and **Client Secret**, and add a redirect URI (base URL to the public HTTPS URL where your app is hosted).
@@ -79,7 +79,7 @@ bun run build
 cd ..
 ```
 
-### Step 5: 🏃🏻‍♂️ Run Your Metronome App
+### Step 5: Run Your Metronome App
 
 For development/testing, you can run the app directly using Bun:
 
