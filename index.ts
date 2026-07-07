@@ -33,18 +33,26 @@ const getUserStmt = db.prepare("SELECT * FROM discord_users WHERE user_id = $use
 const updateBpmStmt = db.prepare("UPDATE discord_users SET bpm = $bpm WHERE user_id = $user_id");
 
 // Cache & render HTML template
-let indexHtml = await Bun.file("./templates/index.html").text();
+let indexHtml = await Bun.file("./metronome-frontend/dist/metronome-frontend/browser/index.html").text();
 const renderedIndex = indexHtml.replace(/\{\{\s*client_id\s*\}\}/g, DISCORD_CLIENT_ID);
 
-// --- Static Files Map (Defined ONCE, outside the request handler) ---
-const STATIC_FILES: Record<string, { path: string; mime: string }> = {
-  "/favicon.ico": { path: "./static/favicon.ico", mime: "image/x-icon" },
-  "/static/css/styles.css": { path: "./static/css/styles.css", mime: "text/css; charset=utf-8" },
-  "/static/js/discord-sdk.js": { path: "./static/js/discord-sdk.js", mime: "application/javascript; charset=utf-8" },
-  "/static/js/main.js": { path: "./static/js/main.js", mime: "application/javascript; charset=utf-8" },
-  "/privacy": { path: "./static/privacy.html", mime: "text/html; charset=utf-8" },
-  "/terms": { path: "./static/terms.html", mime: "text/html; charset=utf-8" },
-};
+const STATIC_FILES = [
+  { pattern: "/favicon.ico", path: "./static/favicon.ico", mime: "image/x-icon" },
+  { pattern: "/privacy", path: "./static/privacy.html", mime: "text/html; charset=utf-8" },
+  { pattern: "/terms", path: "./static/terms.html", mime: "text/html; charset=utf-8" },
+] as const;
+// Simple helper for extension-based MIME + wildcard support
+function getStaticFileConfig(pathname: string) {
+  const exact = STATIC_FILES.find(item => item.pattern === pathname);
+  if (exact) return exact;
+  if (pathname.endsWith(".css")) {
+    return { path: `./metronome-frontend/dist/metronome-frontend/browser${pathname}`, mime: "text/css; charset=utf-8" };
+  }
+  if (pathname.endsWith(".js")) {
+    return { path: `./metronome-frontend/dist/metronome-frontend/browser${pathname}`, mime: "application/javascript; charset=utf-8" };
+  }
+  return null;
+}
 
 // --- HTTP Server ---
 const server = Bun.serve({
@@ -52,31 +60,31 @@ const server = Bun.serve({
   development: DEBUG === "true",
   async fetch(req) {
     const url = new URL(req.url);
+    //console.log(url);
     const { pathname, searchParams } = url;
     const method = req.method;
 
     try {
-      // 1️⃣ Serve static files early (GET only)
-      if (method === "GET" && pathname in STATIC_FILES) {
-        const { path, mime } = STATIC_FILES[pathname];
-        const file = Bun.file(path);
-        if (await file.exists()) {
-          return new Response(file, {
-            headers: {
-              "Content-Type": mime,
-              "Cache-Control": "public, max-age=31536000, immutable",
-            },
-          });
+    if (method === "GET") {
+        const config = getStaticFileConfig(pathname);
+        if (config) {
+          const file = Bun.file(config.path);
+          if (await file.exists()) {
+            return new Response(file, {
+              headers: {
+                "Content-Type": config.mime,
+                "Cache-Control": "public, max-age=3600000, immutable",
+              },
+            });
+          }
         }
       }
-
       // 2️⃣ GET /
       if (pathname === "/" && method === "GET") {
         return new Response(renderedIndex, {
           headers: { "Content-Type": "text/html; charset=utf-8" },
         });
       }
-
       // 3️⃣ POST /api/token
       if (pathname === "/api/token" && method === "POST") {
         const body = await req.json();

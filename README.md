@@ -57,11 +57,17 @@ npm install -g pm2
 4. In Supported Platforms section Allow iOS, Android and Web.
 5. In **General Information**, fill in the **Terms of Service URL** (e.g., `https://<yourdomain>/terms`) and **Privacy Policy URL** (e.g., `https://<yourdomain>/privacy`) to comply with Discord's developer policies.
 
-### Step 4: Configure App Backend
+### Step 4: Configure Backend and build App Frontend
 
 Copy dotenv-example to .env
 
 Edit `.env` and add your actual data: `DISCORD_CLIENT_ID` and `DISCORD_CLIENT_SECRET`.
+
+Build Frontend
+```
+cd metronome-frontend
+ng build
+```
 
 ### Step 5: 🏃🏻‍♂️ Run Your Metronome App
 
