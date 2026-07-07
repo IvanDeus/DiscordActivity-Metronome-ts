@@ -63,7 +63,10 @@ npm install -g pm2
 
 ### Step 4: Configure Backend and build App Frontend
 
-Copy dotenv-example to .env
+Copy dotenv-example to .env:
+```
+cp dotenv-example .env
+```
 
 Edit `.env` and add your actual data: `DISCORD_CLIENT_ID` and `DISCORD_CLIENT_SECRET`.
 
